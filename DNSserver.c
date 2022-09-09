@@ -36,8 +36,8 @@ void initDns(struct dns d[5]){
 
 int compareTwoString(char a[],char b[])  
 {  
-    int flag=0,i=0;  // integer variables declaration  
-    while(a[i]!='\0' &&b[i]!='\0')  // while loop  
+    int flag=0,i=0; 
+    while(a[i]!='\0' &&b[i]!='\0')
     {  
        if(a[i]!=b[i])  
        {  
