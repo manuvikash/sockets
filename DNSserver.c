@@ -34,27 +34,6 @@ void initDns(struct dns d[5]){
 
 }
 
-int compareTwoString(char a[],char b[])  
-{  
-    int flag=0,i=0; 
-    while(a[i]!='\0' &&b[i]!='\0')
-    {  
-       if(a[i]!=b[i])  
-       {  
-           flag=1;  
-           break;  
-       }  
-       i++;  
-    } 
-    if(a[i]!='\n'||b[i]!='\0')
-       return 1;
-    if(flag==0)  
-    return 0;  
-    else  
-    return 1;  
-}  
-
-
 int main(){
 	struct dns d[5];
 	initDns(d);
@@ -82,11 +61,11 @@ int main(){
 	for(int i=0; i<5; i++){
 		len = sizeof(cliaddr);
 		n = recvfrom(sockfd, (char *)buffer, MAXLINE,  MSG_WAITALL, ( struct sockaddr *) &cliaddr, &len); 
-		buffer[n] = '\0'; 
+		buffer[n-1] = '\0'; 
 		printf("Client : %s\n", buffer);
 		int flag = 0;
 		for(int j=0; j<5; j++){
-			if(compareTwoString(buffer, d[j].domain) == 0){
+			if(strcmp(buffer, d[j].domain) == 0){
 				flag++;
 				strcpy(hello, d[j].ip);
 			}
@@ -99,12 +78,9 @@ int main(){
 		 
 		sendto(sockfd, (const char *)hello, strlen(hello),  
 		MSG_CONFIRM, (const struct sockaddr *) &cliaddr, len); 
-		printf("IP address sent\n");  
+		printf("IP address sent\n\n");  
 	}
 		
 	    return 0; 
 }
-
-
-	
 
