@@ -50,7 +50,7 @@ int main(){
 	}
 	
 	servaddr.sin_family = AF_INET;
-	servaddr.sin_addr.s_addr = INADDR_ANY;
+	servaddr.sin_addr.s_addr = htonl(INADDR_ANY);
 	servaddr.sin_port = htons(PORT);
 
 	if(bind(sockfd, (const struct sockaddr *)&servaddr, sizeof(servaddr)) < 0){
