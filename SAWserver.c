@@ -37,12 +37,10 @@ int main() {
 	if (setsockopt(s_fd, SOL_SOCKET, SO_RCVTIMEO,&tv,sizeof(tv)) < 0) {
     		perror("Error");
 	}
-	memset(&sadr,0,sizeof(sadr));
-	memset(&cadr,0,sizeof(cadr));
 
 	sadr.sin_family = AF_INET;
 	sadr.sin_port = htons(PORT);
-	sadr.sin_addr.s_addr = INADDR_ANY;
+	sadr.sin_addr.s_addr = htonl(INADDR_ANY);
 	
 	int frame_no = 0;
 	
@@ -66,10 +64,8 @@ int main() {
 			sendto(s_fd, &sendf, sizeof(sendf), 0, (struct sockaddr*)&cadr, len);
 		}
 		else if(recv.sqn != frame_no) {
-			printf("Duplicate Frame\n");
 		}
 		else if(recv.frame_type == 2) {
-			printf("End\n");
 			break;
 		}  
 		else {

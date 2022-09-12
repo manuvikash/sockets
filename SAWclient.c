@@ -52,7 +52,7 @@ int main() {
 	while(1){
 		sendf.sqn = frame_no;
 		sendf.frame_type = 1;		
-		memset(&buffer[0],0,1024);
+		bzero(buffer, 1024);
 		printf("Enter Input: ");
 		scanf("%s", buffer);
 		if(strcmp(buffer, "end") == 0) break;
@@ -61,7 +61,7 @@ int main() {
 		printf("Frame Sent\n");
 		rs = recvfrom(s_fd, &recv, sizeof(recv), 0 ,(struct sockaddr*)&sadr, &addr_size);
 		
-		if(rs > 0 && recv.sqn == frame_no+1){
+		if(rs > 0 && recv.sqn == frame_no+1 && recv.frame_type==0){
 			printf("Ack Received\n");
 		}else{
 			printf("Ack Not Received; Resending Frame\n");
