@@ -21,10 +21,7 @@ int main() {
   perror("socket creation failed");
   exit(EXIT_FAILURE);
  }
-  
- memset(&servaddr, 0, sizeof(servaddr));
- memset(&cliaddr, 0, sizeof(cliaddr));
-  
+   
  servaddr.sin_family = AF_INET; 
  servaddr.sin_addr.s_addr = INADDR_ANY;
  servaddr.sin_port = htons(PORT);
@@ -41,12 +38,12 @@ int main() {
  len = sizeof(cliaddr);
  
  n = recvfrom(sockfd, (char *)buffer, MAXLINE,
-    MSG_WAITALL, ( struct sockaddr *) &cliaddr,
+    0, ( struct sockaddr *) &cliaddr,
     &len);
  buffer[n] = '\0';
  printf("Client : %s\n", buffer);
  sendto(sockfd, (const char *)hello, strlen(hello),
-  MSG_CONFIRM, (const struct sockaddr *) &cliaddr,
+  0, (const struct sockaddr *) &cliaddr,
    len);
  printf("Hello message sent.\n");
   
